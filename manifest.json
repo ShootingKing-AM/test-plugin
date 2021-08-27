@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-sample-plugin",
-	"name": "Sample Plugin",
+	"id": "sk-customs",
+	"name": "Sk Customs",
 	"version": "1.0.1",
 	"minAppVersion": "0.9.12",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
+	"description": "This is a Sk Customizations.",
 	"author": "Obsidian",
 	"authorUrl": "https://obsidian.md/about",
 	"isDesktopOnly": false

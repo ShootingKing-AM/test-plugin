@@ -1,4 +1,4 @@
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Modal, Notice, Plugin, PluginSettingTab, Setting, Editor, MarkdownView } from 'obsidian';
 
 interface MyPluginSettings {
 	mySetting: string;
@@ -12,27 +12,34 @@ export default class MyPlugin extends Plugin {
 	settings: MyPluginSettings;
 
 	async onload() {
-		console.log('loading plugin');
+		console.log('loading SK plugin');
 
 		await this.loadSettings();
 
 		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a notice!');
+			new Notice('Hello, This is SK Customs Plugin!');
 		});
 
-		this.addStatusBarItem().setText('Status Bar Text');
+		//this.addStatusBarItem().setText('Status Bar Text');
 
 		this.addCommand({
-			id: 'open-sample-modal',
-			name: 'Open Sample Modal',
+			id: 'cloze-c1-append',
+			name: 'Cloze Append',
 			// callback: () => {
 			// 	console.log('Simple Callback');
-			// },
-			checkCallback: (checking: boolean) => {
+			// },			
+			editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) => {
 				let leaf = this.app.workspace.activeLeaf;
 				if (leaf) {
 					if (!checking) {
-						new SampleModal(this.app).open();
+						//new SampleModal(this.app).open();
+						if( editor.somethingSelected() )
+						{
+							editor.replaceSelection('{{c1::' + editor.getSelection() + '::}}');
+							let pos = editor.getCursor('anchor')
+							pos.ch -= 2;
+							editor.setCursor(pos);
+						}
 					}
 					return true;
 				}
@@ -46,15 +53,15 @@ export default class MyPlugin extends Plugin {
 			console.log('codemirror', cm);
 		});
 
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
+		/*this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
 			console.log('click', evt);
 		});
 
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));*/
 	}
 
 	onunload() {
-		console.log('unloading plugin');
+		console.log('unloading SK plugin');
 	}
 
 	async loadSettings() {
